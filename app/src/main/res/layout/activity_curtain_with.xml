@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CurtainWithHandleActivity">
+
+        <LinearLayout
+            android:id="@+id/bullParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.example.mahesh.curtaindemo.WrappingSlidingDrawer
+                android:id="@+id/SlidingDrawer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:allowSingleTap="false"
+                android:content="@id/content"
+                android:handle="@id/handle"
+                android:orientation="vertical"
+                android:rotation="180.0">
+
+                <RelativeLayout
+                    android:id="@+id/handle"
+                    android:layout_width="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="100dp"
+                    android:rotation="180">
+
+                    <ImageView
+                        android:id="@+id/bull"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
+                        android:visibility="invisible"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center|top"
+                    android:orientation="vertical"
+                    android:rotation="180.0">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true" />
+
+                </RelativeLayout>
+
+            </com.example.mahesh.curtaindemo.WrappingSlidingDrawer>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>
