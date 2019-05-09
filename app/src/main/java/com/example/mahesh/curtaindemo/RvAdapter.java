@@ -15,7 +15,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyViewHolder> {
 
     private Context context;
 
-    public RvAdapter(Context context) {
+    RvAdapter(Context context) {
         this.context = context;
     }
 
@@ -30,8 +30,15 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyViewHolder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.binding.tvTitle.setText("Title " + position);
-        holder.binding.tvContent.setText("Content " + position);
+        if (position % 2 == 0) {
+            holder.binding.tvTitle.setText("Title " + position);
+            holder.binding.tvContent.setText("Content " + position);
+            holder.binding.clText.setVisibility(View.VISIBLE);
+            holder.binding.ivImage.setVisibility(View.GONE);
+        } else {
+            holder.binding.clText.setVisibility(View.GONE);
+            holder.binding.ivImage.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

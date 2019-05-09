@@ -19,17 +19,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:allowSingleTap="false"
-                android:content="@id/content"
-                android:handle="@id/handle"
                 android:orientation="vertical"
-                android:rotation="180.0">
+                android:rotation="180.0"
+                app:content="@id/content"
+                app:handle="@id/handle">
 
                 <RelativeLayout
                     android:id="@+id/handle"
                     android:layout_width="wrap_content"
-                    android:background="@color/colorAccent"
                     android:layout_height="56dp"
                     android:layout_marginStart="100dp"
+                    android:background="@color/colorAccent"
                     android:rotation="180">
 
                     <ImageView

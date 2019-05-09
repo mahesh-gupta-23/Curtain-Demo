@@ -11,13 +11,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 
-/*public class WrappingSlidingDrawer extends SlidingDrawer {
- *//* renamed from: a *//*
+public class WrappingSlidingDrawer extends CustomSlidingDrawer {
     private boolean f3807a;
-    *//* renamed from: b *//*
     private int f3808b;
     public static final String ANDROID_CLIENT_TYPE = "android";
-
 
     public WrappingSlidingDrawer(Context context, AttributeSet attributeSet, int i) {
         super(context, attributeSet, i);
@@ -82,9 +79,10 @@ import android.widget.SlidingDrawer;
         i5 = isOpened() ? 0 : i5 - height;
         relativeLayout.layout(0, i5, width + 0, height + i5);
     }
-}*/
+}
 
 
+/*
 public class WrappingSlidingDrawer extends SlidingDrawer {
 
     private boolean mVertical;
@@ -142,4 +140,4 @@ public class WrappingSlidingDrawer extends SlidingDrawer {
         setMeasuredDimension(widthSpecSize, heightSpecSize);
     }
 
-}
+}*/
