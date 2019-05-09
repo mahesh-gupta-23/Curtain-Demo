@@ -550,9 +550,7 @@ public class CustomSlidingDrawer extends ViewGroup {
                 }
             }
         }
-
-//        animationVelocity = 0;
-
+        
         animationLastTime = SystemClock.uptimeMillis();
 
         animating = true;
