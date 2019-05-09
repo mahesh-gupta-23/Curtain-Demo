@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -60,6 +61,9 @@ public class CustomSlidingDrawer extends ViewGroup {
 
     private boolean locked;
     private boolean expanded;
+
+    private boolean goingUp;
+    private float lastY = 0;
 
     private int handleWidth;
     private int handleHeight;
@@ -163,11 +167,17 @@ public class CustomSlidingDrawer extends ViewGroup {
 
         tapThreshold = (int) (TAP_THRESHOLD * density + 0.5f);
         velocityUnits = (int) (VELOCITY_UNITS * density + 0.5f);
-
+        Log.d(TAG, "loadStyleable: velocityUnits " + velocityUnits);
         maxTapVelocity = (int) (MAX_TAP_VELOCITY * density + 0.5f);
         maxMinorVelocity = (int) (MAX_MINOR_VELOCITY * density + 0.5f);
         maxMajorVelocity = (int) (MAX_MAJOR_VELOCITY * density + 0.5f);
         maxAcceleration = (int) (MAX_ACCELERATION * density + 0.5f);
+
+        Log.d(TAG, "loadStyleable: density " + density);
+        Log.d(TAG, "loadStyleable: maxTapVelocity " + maxTapVelocity);
+        Log.d(TAG, "loadStyleable: maxMinorVelocity " + maxMinorVelocity);
+        Log.d(TAG, "loadStyleable: maxMajorVelocity " + maxMajorVelocity);
+        Log.d(TAG, "loadStyleable: maxAcceleration " + maxAcceleration);
     }
 
     @Override
@@ -362,7 +372,7 @@ public class CustomSlidingDrawer extends ViewGroup {
         }
 
         if (tracking) {
-
+//            event.setLocation(event.getRawX(), event.getRawY());
             velocityTracker.addMovement(event);
 
             final int action = event.getAction();
@@ -371,6 +381,12 @@ public class CustomSlidingDrawer extends ViewGroup {
 
                 case MotionEvent.ACTION_MOVE:
                     moveHandle((int) (vertical ? event.getY() : event.getX()) - touchDelta);
+
+                    //TODO This worked
+                    goingUp = lastY < event.getY();
+                    lastY = event.getY();
+                    //TODO This worked up till here
+
                     break;
 
                 case MotionEvent.ACTION_UP:
@@ -412,9 +428,18 @@ public class CustomSlidingDrawer extends ViewGroup {
                     if (negative) {
                         velocity = -velocity;
                     }
-
                     final int top = viewHandle.getTop();
                     final int left = viewHandle.getLeft();
+
+
+                    //TODO This worked
+                    ViewConfiguration configuration = ViewConfiguration.get(super.getContext());
+                    velocity = configuration.getScaledMaximumFlingVelocity();
+
+                    if (goingUp) {
+                        velocity = -velocity;
+                    }
+                    //TODO This worked up till here
 
                     if (Math.abs(velocity) < maxTapVelocity) {
                         if (vertical ? (expanded && top < tapThreshold + topOffset) || (!expanded && top > bottomOffset + getBottom() - getTop() - handleHeight - tapThreshold) :
@@ -550,7 +575,7 @@ public class CustomSlidingDrawer extends ViewGroup {
                 }
             }
         }
-        
+
         animationLastTime = SystemClock.uptimeMillis();
 
         animating = true;
@@ -576,6 +601,10 @@ public class CustomSlidingDrawer extends ViewGroup {
         //TODO: This Worked
 //        animationPosition = position + (velocity * time) + (0.5f * acceleration * time * time);
         animationPosition = position - (velocity * time) - (0.5f * acceleration * time * time);
+        Log.d(TAG, "incrementAnimation: time " + time);
+        Log.d(TAG, "incrementAnimation: velocity " + velocity);
+        Log.d(TAG, "incrementAnimation: position " + position);
+        Log.d(TAG, "incrementAnimation: position " + position);
         Log.d(TAG, "incrementAnimation: animationVelocity " + animationVelocity);
         Log.d(TAG, "incrementAnimation: position " + position);
         Log.d(TAG, "incrementAnimation: animationPosition " + animationPosition);
