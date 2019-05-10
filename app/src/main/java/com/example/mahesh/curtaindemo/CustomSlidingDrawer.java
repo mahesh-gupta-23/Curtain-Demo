@@ -18,6 +18,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.RelativeLayout;
 
 public class CustomSlidingDrawer extends ViewGroup {
     private static final String TAG = "CustomSlidingDrawer";
@@ -196,22 +197,26 @@ public class CustomSlidingDrawer extends ViewGroup {
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
 
-        final int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
-        final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
 
-        final int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
-        final int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
 
         if (widthSpecMode == MeasureSpec.UNSPECIFIED || heightSpecMode == MeasureSpec.UNSPECIFIED) {
-            throw new IllegalStateException("The Drawer cannot have unspecified dimensions.");
+            throw new RuntimeException("SlidingDrawer cannot have UNSPECIFIED dimensions");
         }
 
-        measureChild(viewHandle, widthMeasureSpec, heightMeasureSpec);
+        final View handle = getHandle();
+        final View content = getContent();
+        measureChild(handle, widthMeasureSpec, heightMeasureSpec);
 
-        final int height = heightSpecSize - viewHandle.getMeasuredHeight() - topOffset;
-
-        viewContent.measure(MeasureSpec.makeMeasureSpec(widthSpecSize, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+        int height = heightSpecSize - handle.getMeasuredHeight() - topOffset;
+        content.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, heightSpecMode));
+        heightSpecSize = handle.getMeasuredHeight() + topOffset + content.getMeasuredHeight();
+        widthSpecSize = content.getMeasuredWidth();
+        if (handle.getMeasuredWidth() > widthSpecSize)
+            widthSpecSize = handle.getMeasuredWidth();
 
         setMeasuredDimension(widthSpecSize, heightSpecSize);
     }
@@ -220,7 +225,6 @@ public class CustomSlidingDrawer extends ViewGroup {
     protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
 
         if (!tracking) {
-
             final int width = right - left;
             final int height = bottom - top;
 
@@ -240,7 +244,22 @@ public class CustomSlidingDrawer extends ViewGroup {
 
             viewHandle.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
             handleHeight = viewHandle.getHeight();
+
+            int newChildTop = isOpened() ? topOffset : height - handleHeight + bottomOffset;
+            viewHandle.layout(0, newChildTop, childWidth, childHeight + newChildTop);//Right
         }
+
+//        int height = bottom - top;
+//        RelativeLayout handle = (RelativeLayout) getHandle();
+//        int childLeft = 0;
+//        int topOffset = 0;
+//        int bottomOffset = 0;
+//        int handleWidth = handle.getWidth();
+//        int handleHeight = handle.getHeight();
+//        int childTop = isOpened() ? topOffset : height - handleHeight + bottomOffset;
+//        handle.layout(left_position, top_position, right_position, bottom_position) all Relative to parent
+//        handle.layout(childLeft, childTop, handleWidth, handleHeight + childTop);//Right
+//        handle.layout(childLeft + handleWidth, childTop, right, childTop + handleHeight);//Left
     }
 
     @Override

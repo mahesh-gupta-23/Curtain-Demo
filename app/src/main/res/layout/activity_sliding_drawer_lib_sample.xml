@@ -12,12 +12,11 @@
             android:id="@+id/tv_dummy"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="100dp"
             android:text="Click"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.mahesh.curtaindemo.WrappingSlidingDrawer
+        <com.example.mahesh.curtaindemo.CustomSlidingDrawer
             android:id="@+id/drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +31,6 @@
                 android:id="@+id/handle"
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
-                android:gravity="start"
                 android:rotation="180">
 
                 <ImageView
@@ -59,7 +57,7 @@
                     android:layout_alignParentTop="true" />
 
             </RelativeLayout>
-        </com.example.mahesh.curtaindemo.WrappingSlidingDrawer>
+        </com.example.mahesh.curtaindemo.CustomSlidingDrawer>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -20,6 +20,8 @@ public class SlidingDrawerLibSampleActivity extends AppCompatActivity {
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvList.setAdapter(adapter);
 
+//        binding.rvList.scrollToPosition(9);
+
         binding.tvDummy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

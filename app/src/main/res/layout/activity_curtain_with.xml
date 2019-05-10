@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.example.mahesh.curtaindemo.WrappingSlidingDrawer
+            <com.example.mahesh.curtaindemo.CustomSlidingDrawer
                 android:id="@+id/SlidingDrawer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
                 </RelativeLayout>
 
-            </com.example.mahesh.curtaindemo.WrappingSlidingDrawer>
+            </com.example.mahesh.curtaindemo.CustomSlidingDrawer>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>
