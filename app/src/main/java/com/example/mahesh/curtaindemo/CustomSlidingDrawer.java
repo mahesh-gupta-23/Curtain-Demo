@@ -11,14 +11,12 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.RelativeLayout;
 
 public class CustomSlidingDrawer extends ViewGroup {
     private static final String TAG = "CustomSlidingDrawer";
@@ -159,18 +157,9 @@ public class CustomSlidingDrawer extends ViewGroup {
         final float density = getResources().getDisplayMetrics().density;
 
         tapThreshold = (int) (TAP_THRESHOLD * density + 0.5f);
-        int velocityUnits = (int) (VELOCITY_UNITS * density + 0.5f);
-        Log.d(TAG, "loadStyleable: velocityUnits " + velocityUnits);
         maxTapVelocity = (int) (MAX_TAP_VELOCITY * density + 0.5f);
-        int maxMinorVelocity = (int) (MAX_MINOR_VELOCITY * density + 0.5f);
         maxMajorVelocity = (int) (MAX_MAJOR_VELOCITY * density + 0.5f);
         maxAcceleration = (int) (MAX_ACCELERATION * density + 0.5f);
-
-        Log.d(TAG, "loadStyleable: density " + density);
-        Log.d(TAG, "loadStyleable: maxTapVelocity " + maxTapVelocity);
-        Log.d(TAG, "loadStyleable: maxMinorVelocity " + maxMinorVelocity);
-        Log.d(TAG, "loadStyleable: maxMajorVelocity " + maxMajorVelocity);
-        Log.d(TAG, "loadStyleable: maxAcceleration " + maxAcceleration);
     }
 
     @Override
@@ -341,10 +330,8 @@ public class CustomSlidingDrawer extends ViewGroup {
                 case MotionEvent.ACTION_MOVE:
                     moveHandle((int) (event.getY()) - touchDelta);
 
-                    //TODO This worked
                     goingDown = lastY > event.getY();
                     lastY = event.getY();
-                    //TODO This worked up till here
 
                     break;
 
@@ -353,17 +340,13 @@ public class CustomSlidingDrawer extends ViewGroup {
 
                     final int top = viewHandle.getTop();
 
-                    //TODO This worked
                     float velocity = configuration.getScaledMaximumFlingVelocity();
-
-                    Log.d(TAG, "onTouchEvent: velocity" + velocity);
                     if (goingDown) {
                         velocity = -velocity;
                     }
-                    //TODO This worked up till here
+
                     if (Math.abs(velocity) < maxTapVelocity) {
                         if ((expanded && top < tapThreshold + topOffset) || (!expanded && top > bottomOffset + getBottom() - getTop() - handleHeight - tapThreshold)) {
-
                             if (allowSingleTap) {
                                 if (expanded) {
                                     animateClose(top);
@@ -371,17 +354,13 @@ public class CustomSlidingDrawer extends ViewGroup {
                                     animateOpen(top);
                                 }
                             } else {
-                                Log.d(TAG, "onTouchEvent: 1 fling");
                                 performFling(top, velocity, false);
                             }
 
                         } else {
-                            Log.d(TAG, "onTouchEvent: 2 fling");
                             performFling(top, velocity, false);
                         }
-
                     } else {
-                        Log.d(TAG, "onTouchEvent: 3 fling");
                         performFling(top, velocity, false);
                     }
 
@@ -491,8 +470,6 @@ public class CustomSlidingDrawer extends ViewGroup {
         animationLastTime = SystemClock.uptimeMillis();
 
         animating = true;
-        Log.d(TAG, "performFling: animationVelocity " + animationVelocity);
-        Log.d(TAG, "performFling: animationPosition " + animationPosition);
         removeCallbacks(handler);
         postDelayed(handler, ANIMATION_FRAME_DURATION);
 
@@ -578,7 +555,6 @@ public class CustomSlidingDrawer extends ViewGroup {
     }
 
     private void moveHandle(final int position) {
-        Log.d(TAG, "moveHandle: position " + position);
         if (position == DRAWER_EXPANDED) {
             viewHandle.offsetTopAndBottom(topOffset - viewHandle.getTop());
 
