@@ -24,6 +24,8 @@ public class CustomSlidingDrawer extends ViewGroup {
     private static final int TAP_THRESHOLD = 6;
     private static final int VELOCITY_UNITS = 1000;
 
+    public static final int ORIENTATION_VERTICAL = 1;
+
     private static final float MAX_TAP_VELOCITY = 100.0f;
     private static final float MAX_MINOR_VELOCITY = 150.0f;
     private static final float MAX_MAJOR_VELOCITY = 200.0f;
@@ -55,7 +57,7 @@ public class CustomSlidingDrawer extends ViewGroup {
     private boolean locked;
     private boolean expanded;
 
-    private boolean goingUp;
+    private boolean goingDown;
     private float lastY = 0;
 
     private int handleHeight;
@@ -321,7 +323,7 @@ public class CustomSlidingDrawer extends ViewGroup {
                     moveHandle((int) (event.getY()) - touchDelta);
 
                     //TODO This worked
-                    goingUp = lastY < event.getY();
+                    goingDown = lastY > event.getY();
                     lastY = event.getY();
                     //TODO This worked up till here
 
@@ -336,7 +338,7 @@ public class CustomSlidingDrawer extends ViewGroup {
                     float velocity = configuration.getScaledMaximumFlingVelocity();
 
                     Log.d(TAG, "onTouchEvent: velocity" + velocity);
-                    if (goingUp) {
+                    if (goingDown) {
                         velocity = -velocity;
                     }
                     //TODO This worked up till here
@@ -489,9 +491,7 @@ public class CustomSlidingDrawer extends ViewGroup {
         final float position = animationPosition;
 
         animationVelocity = velocity + (acceleration * time);
-        //TODO: This Worked
-//        animationPosition = position + (velocity * time) + (0.5f * acceleration * time * time);
-        animationPosition = position - (velocity * time) - (0.5f * acceleration * time * time);
+        animationPosition = position + (velocity * time) + (0.5f * acceleration * time * time);
         animationLastTime = now;
     }
 
