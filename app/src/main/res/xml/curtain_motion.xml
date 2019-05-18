@@ -7,7 +7,7 @@
         motion:duration="1000">
         <OnSwipe
             motion:dragDirection="dragDown"
-            motion:touchAnchorId="@id/iv_handle" />
+            motion:touchRegionId="@id/iv_handle" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -16,6 +16,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 motion:layout_constraintBottom_toTopOf="parent" />
+        </Constraint>
+        <Constraint android:id="@id/rv_bottom">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/rv_list" />
+            <CustomAttribute
+                motion:attributeName="BackgroundColor"
+                motion:customColorValue="@android:color/transparent" />
         </Constraint>
     </ConstraintSet>
 
@@ -26,15 +36,18 @@
             <Layout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                motion:layout_constraintBottom_toTopOf="@id/iv_handle"
                 motion:layout_constraintTop_toTopOf="parent" />
         </Constraint>
-        <Constraint android:id="@id/iv_handle">
+
+        <Constraint android:id="@id/rv_bottom">
             <Layout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 motion:layout_constraintBottom_toBottomOf="parent"
                 motion:layout_constraintTop_toBottomOf="@id/rv_list" />
+            <CustomAttribute
+                motion:attributeName="BackgroundColor"
+                motion:customColorValue="@color/colorPrimaryDark" />
         </Constraint>
     </ConstraintSet>
 
