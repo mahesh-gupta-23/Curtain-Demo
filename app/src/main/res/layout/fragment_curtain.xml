@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.motion.MotionLayout
+    <com.example.mahesh.curtaindemo.SingleViewTouchableMotionLayout
         android:id="@+id/cl_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:viewToDetectTouch="@id/iv_handle"
         app:layoutDescription="@xml/curtain_motion"
         tools:context=".CurtainActivity">
 
@@ -36,5 +37,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_list"
             tools:ignore="ContentDescription" />
-    </android.support.constraint.motion.MotionLayout>
+    </com.example.mahesh.curtaindemo.SingleViewTouchableMotionLayout>
 </layout>
