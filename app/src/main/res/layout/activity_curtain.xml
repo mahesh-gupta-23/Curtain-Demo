@@ -3,38 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.motion.MotionLayout
-        android:id="@+id/cl_back"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/curtain_motion"
-        tools:context=".CurtainActivity">
+        android:layout_height="match_parent">
 
-        <com.example.mahesh.curtaindemo.MaxHeightRecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_click"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:maxHeight="350dp" />
-
-        <View
-            android:id="@+id/rv_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:text="Click"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_list" />
-
-        <View
-            android:id="@+id/iv_handle"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@color/colorAccent"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:paddingBottom="2dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_list"
-            tools:ignore="ContentDescription" />
-    </android.support.constraint.motion.MotionLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
 </layout>
